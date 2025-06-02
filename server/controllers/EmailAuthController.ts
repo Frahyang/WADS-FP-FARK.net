@@ -45,7 +45,7 @@ const userSendMail = (to:string, otp:any, titleTxt:string, _res:Response) => {
         `
     };
 
-    transporter.sendMail(mailOptions, (err, info) => {
+    transporter.sendMail(mailOptions, (err:any, info:any) => {
         if (err) return err;
         return info;
     });
@@ -92,7 +92,7 @@ const sendTicketResponseEmail = (to: string, ticketId: string, ticketTitle: stri
     };
 
     return new Promise((resolve, reject) => {
-        transporter.sendMail(mailOptions, (err, info) => {
+        transporter.sendMail(mailOptions, (err:any, info:any) => {
             if (err) reject(err);
             resolve(info);
         });

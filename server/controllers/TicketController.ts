@@ -1,10 +1,10 @@
 import { Ticket } from "../models/TicketModel";
 import { User } from "../models/UserModel";
-import { Request, Response } from "express";
+// import { Request, Response } from "express";
 import { v4 as uuidv4 } from 'uuid'
 import { sendTicketResponseEmail } from './EmailAuthController';
 
-const createTicket = async (req: Request, res: Response) => {
+const createTicket = async (req:any, res:any) => {
     try {
         const { owner_id } = req.params;
         const { title, description, assignee, type, date_created, priority, status } = req.body;
@@ -36,7 +36,7 @@ const createTicket = async (req: Request, res: Response) => {
     }
 };
 
-const getTickets = async (_req: Request, res: Response) => {
+const getTickets = async (_req: any, res: any) => {
     try {
         const tickets = await Ticket.find().sort({ date_created: -1 });
         return res.status(200).json(tickets);
@@ -46,7 +46,7 @@ const getTickets = async (_req: Request, res: Response) => {
     }
 };
 
-const getTicketsByOwnerID = async (req: Request, res: Response) => {
+const getTicketsByOwnerID = async (req: any, res: any) => {
     try {
         const { owner_id } = req.params;
         if (!owner_id) {
@@ -61,7 +61,7 @@ const getTicketsByOwnerID = async (req: Request, res: Response) => {
     }
 };
 
-const updateStatus = async (req: Request, res: Response) => {
+const updateStatus = async (req: any, res: any) => {
     try {
         const { ticket_id } = req.params;
         const updates = req.body; // Get all updates from the body
@@ -89,7 +89,7 @@ const updateStatus = async (req: Request, res: Response) => {
     }
 };
 
-const deleteTicket = async (req: Request, res: Response) => {
+const deleteTicket = async (req: any, res: any) => {
     try {
         const { ticket_id } = req.params;
 
@@ -110,7 +110,7 @@ const deleteTicket = async (req: Request, res: Response) => {
     }
 };
 
-const sendTicketResponse = async (req: Request, res: Response) => {
+const sendTicketResponse = async (req: any, res: any) => {
     try {
         const { ticket_id } = req.params;
         const { response } = req.body;

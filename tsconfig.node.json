@@ -22,5 +22,5 @@
 
     "esModuleInterop": true,
   },
-  "include": ["vite.config.ts", "scripts/**/*.ts"]
+  "include": ["vite.config.ts", "scripts/**/*.ts", "server", "server/types"]
 }

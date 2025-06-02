@@ -1,9 +1,13 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
+import swaggerUi from 'swagger-ui-express'
+import yaml from 'yamljs'
 
+// import { swaggerSpec } from './utils/swagger'
 import { connectToMongo } from './config/mongoClient'
-import usersRoute from './routes/userRoutes'
+
+import usersRoute from './routes/UserRoutes'
 import ticketRoute from './routes/TicketRoutes'
 
 // <<<<<<< HEAD:server/server.js
@@ -35,9 +39,10 @@ app.use(express.json());
 
 app.use('/service/user', usersRoute);
 app.use('/service/tickets', ticketRoute);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(yaml.load('./utils/swagger.yaml')))
 
 // Make sure server is running
-app.get('/', (_req, res) => {
+app.get('/', (_req:any, res:any) => {
   res.send('Server is working!');
 });
 

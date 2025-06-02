@@ -1,0 +1,234 @@
+openapi: 3.0.0
+info:
+  title: Ticketing API
+  version: 1.0.0
+paths:
+  /create_ticket/{owner_id}:
+    post:
+      summary: Create a ticket
+      parameters:
+        - in: path
+          name: owner_id
+          required: true
+          schema:
+            type: string
+          description: ID of the ticket owner
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                subject:
+                  type: string
+                message:
+                  type: string
+      responses:
+        '201':
+          description: Ticket created successfully
+
+  /get_tickets_all:
+    get:
+      summary: Get all tickets
+      responses:
+        '200':
+          description: List of all tickets
+
+  /get_tickets_byOwnerId/{owner_id}:
+    get:
+      summary: Get tickets by owner ID
+      parameters:
+        - in: path
+          name: owner_id
+          required: true
+          schema:
+            type: string
+          description: Owner's user ID
+      responses:
+        '200':
+          description: List of tickets for the given owner
+
+  /update_status/{ticket_id}:
+    patch:
+      summary: Update ticket status
+      parameters:
+        - in: path
+          name: ticket_id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: [open, closed, pending]
+      responses:
+        '200':
+          description: Status updated
+
+  /delete_ticket/{ticket_id}:
+    delete:
+      summary: Delete a ticket
+      parameters:
+        - in: path
+          name: ticket_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Ticket deleted
+
+  /send_response/{ticket_id}:
+    post:
+      summary: Send a response to a ticket
+      parameters:
+        - in: path
+          name: ticket_id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                response:
+                  type: string
+      responses:
+        '200':
+          description: Response sent
+
+  /signup:
+    post:
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: User signed up
+
+  /signin:
+    post:
+      summary: Sign in an existing user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User signed in
+
+  /verify-otp:
+    post:
+      summary: Verify OTP
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                otp:
+                  type: string
+      responses:
+        '200':
+          description: OTP verified
+
+  /resend-otp:
+    post:
+      summary: Resend OTP
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+      responses:
+        '200':
+          description: OTP resent
+
+  /add:
+    post:
+      summary: Add a new user (admin use)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+      responses:
+        '201':
+          description: User added
+
+  /edit/{id}:
+    put:
+      summary: Update a user
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+      responses:
+        '200':
+          description: User updated
+
+  /delete/{id}:
+    delete:
+      summary: Delete a user
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: User deleted
+
