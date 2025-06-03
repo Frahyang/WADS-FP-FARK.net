@@ -46,13 +46,18 @@ function Home() {
             <header>
                 <HeaderBar />
                 <div className={styles.jumbotron}>
-                    <div className={styles.jumbo_content}>
-                        <div className={styles.jumbo_desc}>
-                            <h1 className={styles.jumbo_header}>Certified Invisalign and Damon System Clinic</h1>
-                            <p>We offer a wide range of dental services, including general and cosmetic dentistry, teeth whitening, orthodontics (including invisible braces), implants, and preventive care for all ages. Our licensed doctors and assistants follow strict quality standards to ensure your comfort and trust. With up-to-date training and friendly, professional care, we’re committed to treating your smile — with a smile.</p>
-                        </div>
-                        <button onClick={() => nav('/contact')} className={styles.jumbo_bookBtn}>Book an appointment now!</button>
+                <div className={styles.jumbo_content}>
+                    <div className={styles.jumbo_desc}>
+                    <h1 className={styles.jumbo_header}>Need Help? We're Here for You</h1>
+                    <p>
+                        Whether you're facing a dental issue, have questions about your treatment, or need technical assistance,
+                        our support team is ready to assist you. Submit a support request and we'll get back to you as soon as possible.
+                    </p>
                     </div>
+                    <button onClick={() => nav('/signup')} className={styles.jumbo_bookBtn}>
+                    Submit a Support Request
+                    </button>
+                </div>
                 </div>
             </header>
             <main>
@@ -64,7 +69,6 @@ function Home() {
                         <div>
                             <h1 className={styles.about_title}>Dr. Melinda</h1>
                             <p className={styles.about_desc}>Dr. Melinda has developed a great reputation as a family dentist. She is also very passionate about dentistry and understands the importance of offering quality dental care to both adults and children. She will ensure you receive the highest standards of dental care in a good communication so patient will understand why it’s important and how to maintain oral hygiene.</p>
-                            <button onClick = {() => nav("/about_us")} className={styles.about_readmore}>Read More about Dr. Melinda</button>
                         </div>
                     </div>
                 </section>

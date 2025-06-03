@@ -16,6 +16,7 @@ import TicketAppScreen from './pages/TicketAppScreen';
 
 function App() {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
+  console.log(localStorage.getItem("user"));
   const ownerId = user?.id || null;
   return (
     <Routes>

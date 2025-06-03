@@ -1,12 +1,13 @@
 // const nodemailer = require('nodemailer');
 // const dotenv = require('dotenv');
 
-import nodemailer from 'nodemailer'
+import nodemailer, { SentMessageInfo } from 'nodemailer'
 import dotenv from 'dotenv'
+import { Response } from 'express'
 
 dotenv.config();
 
-const userSendMail = (to:string, otp:any, titleTxt:string, _res:Response) => {
+const userSendMail = (to: string, otp: string, titleTxt: string, _res: Response) => {
     let config = {
         service: 'gmail',
         auth: {
@@ -45,7 +46,11 @@ const userSendMail = (to:string, otp:any, titleTxt:string, _res:Response) => {
         `
     };
 
+<<<<<<< HEAD
     transporter.sendMail(mailOptions, (err:any, info:any) => {
+=======
+    transporter.sendMail(mailOptions, (err: Error | null, info: SentMessageInfo) => {
+>>>>>>> 06dd04c2edd2f39c8334a7d5dcd4898f4840bad8
         if (err) return err;
         return info;
     });
@@ -91,8 +96,13 @@ const sendTicketResponseEmail = (to: string, ticketId: string, ticketTitle: stri
         `
     };
 
+<<<<<<< HEAD
     return new Promise((resolve, reject) => {
         transporter.sendMail(mailOptions, (err:any, info:any) => {
+=======
+    return new Promise<SentMessageInfo>((resolve, reject) => {
+        transporter.sendMail(mailOptions, (err: Error | null, info: SentMessageInfo) => {
+>>>>>>> 06dd04c2edd2f39c8334a7d5dcd4898f4840bad8
             if (err) reject(err);
             resolve(info);
         });

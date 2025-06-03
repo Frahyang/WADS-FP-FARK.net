@@ -163,24 +163,6 @@ const SignIn: React.FC = () => {
               {loading ? "Signing in..." : "Sign In"}
             </button>
 
-            <div className="flex items-center my-4 sm:my-6">
-              <div className="flex-grow border-t border-gray-300" />
-              <span className="mx-2 sm:mx-3 text-gray-500 text-sm sm:text-base">OR</span>
-              <div className="flex-grow border-t border-gray-300" />
-            </div>
-
-            <button
-              type="button"
-              className="w-full border border-gray-300 py-2 sm:py-3 rounded-lg flex items-center justify-center gap-2 sm:gap-3 hover:bg-gray-100 cursor-pointer"
-            >
-              <img
-                src="https://www.svgrepo.com/show/475656/google-color.svg"
-                alt="Google"
-                className="h-5 w-5 sm:h-6 sm:w-6"
-              />
-              Continue with Google
-            </button>
-
             <p className="text-sm sm:text-base text-center mt-4 sm:mt-6 text-gray-600">
               Don't have an account?{" "}
               <a href="/signup" className="text-violet-600 font-semibold hover:underline">

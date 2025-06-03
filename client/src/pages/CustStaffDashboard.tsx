@@ -45,9 +45,23 @@ const CustomerDashboard = () => {
   const tabs = ['All Tickets', 'Unseen', 'In Progress', 'Completed'];
 
   const fetchTickets = useCallback(async () => {
-    // TODO: Replace with actual logged-in user's ID
-    const ownerId = '683aa7bd4e9a243e61f86c57'; 
     try {
+      // Get the token from localStorage or sessionStorage
+      const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+      if (!token) {
+        console.error('No authentication token found');
+        return;
+      }
+
+      // Decode the JWT token to get user information
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+
+      const { id: ownerId } = JSON.parse(jsonPayload);
+      
       const data = await ticketService.getTicketsByOwnerId(ownerId);
       // Map backend data to frontend Ticket interface if necessary
       const formattedData: Ticket[] = data.map((ticket: BackendTicket) => ({
@@ -137,12 +151,13 @@ const CustomerDashboard = () => {
     // TODO: Implement create ticket functionality
     setShowCreateTicketModal(true);
     navigate("/createticket");
+
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <DashboardHeader isAdmin={false}></DashboardHeader>
+      <DashboardHeader />
    
       {/* Mobile Ticket Details Full Screen */}
       {showMobileTicketDetails && selectedTicket && (

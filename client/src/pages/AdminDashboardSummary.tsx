@@ -168,7 +168,7 @@ const AdminDashboardSummary = () => {
 
   return (
     <div>
-      <DashboardHeader isAdmin={true} />
+      <DashboardHeader />
       <DashboardNav navs={navOptions} currentFilter={'summary'} />
       <div className="max-w-7xl mx-auto p-4 pt-0 sm:p-6 min-h-screen">
         

@@ -125,7 +125,7 @@ function AdminDashboard() {
   return (
     <>
       <main className={styles.main}>
-        <DashboardHeader isAdmin={true} />
+        <DashboardHeader />
         <div className="absolute top-4 right-4 md:static md:top-auto md:right-auto">
           <DashboardNav navs={navOptions} currentFilter={statusParam || 'all'} />
         </div>

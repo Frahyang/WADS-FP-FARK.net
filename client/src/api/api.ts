@@ -59,6 +59,14 @@ export const authService = {
     const response = await api.post('/service/user/resend-otp', { email });
     return response.data;
   },
+
+  logout: () => {
+    // Remove token from both storage locations
+    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
+    // Remove any other auth-related data
+    localStorage.removeItem('verificationEmail');
+  }
 };
 
 export const ticketService = {
@@ -93,4 +101,4 @@ export const ticketService = {
   }
 };
 
-export default api; 
+export default api;

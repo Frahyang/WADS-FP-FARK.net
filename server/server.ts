@@ -30,13 +30,14 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Allow requests from React frontend
+// Middleware
 app.use(cors({
   origin: 'http://localhost:5173',
-  credentials: true // if you're using cookies or auth headers
+  credentials: true
 }));
 app.use(express.json());
 
+// Routes
 app.use('/service/user', usersRoute);
 app.use('/service/tickets', ticketRoute);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(yaml.load('./utils/swagger.yaml')))

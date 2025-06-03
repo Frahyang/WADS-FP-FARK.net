@@ -1,113 +1,149 @@
-import React, { useState } from "react";
-import { ticketService } from "../api/api";
-import "./TicketAppScreen.css";
+import React, { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import "./TicketAppScreen.css";
+import { ticketService } from "../api/api";
+import type { CreateTicketPayload } from "../api/api";
 
-
-interface TicketAppScreenProps {
-  ownerId: string;
+interface TicketFormData {
+    title: string;
+    type: "IT System" | "Management";
+    description: string;
 }
 
-const TicketAppScreen: React.FC<TicketAppScreenProps> = ({ ownerId }) => {
-  console.log("Owner ID:", ownerId);
-  const [title, setTitle] = useState("");
-  const [type, setType] = useState<"IT System" | "Management">("IT System");
-  const [description, setDescription] = useState("");
-  const navigate = useNavigate();
+const TicketAppScreen = () => {
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState<TicketFormData>({
+        title: "",
+        type: "IT System",
+        description: ""
+    });
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
-  const assignee = "support-team";
-  const priority = "Medium";
-  const status = "Unseen";
-  const date_created = new Date().toISOString();
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const response = await ticketService.createTicket(ownerId, {
-        title,
-        description,
-        assignee,
-        type,
-        date_created,
-        priority,
-        status,
-      });
-      alert("Ticket created: " + response.message);
-      setTitle("");
-      setType("IT System");
-      setDescription("");
-    } catch (err: any) {
-      console.error(err);
-      alert("Error: " + (err.response?.data?.message || err.message));
-    }
-  };
+    const handleSubmit = async (e: FormEvent) => {
+        e.preventDefault();
+        setError("");
+        setLoading(true);
 
-  return (
-    <>
-      <div className="top_container">
-        <div className="name">
-          <img className="logo" src="../src/assets/logo.png" alt="Logo" />
-          <h2>Dentalign</h2>
-        </div>
-        <p className="text">
-          We would always love to upgrade our system, to <br />
-          provide the best experience for our loyal beloved <br />
-          customers.
-        </p>
-      </div>
+        try {
+            // Get the token from localStorage or sessionStorage
+            const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+            if (!token) {
+                setError("Please sign in to submit a ticket");
+                setLoading(false);
+                return;
+            }
 
-      <div className="bottom_container">
-        <h1 className="what">What can we do for you?</h1>
-        <h6 className="send">
-          Submit a ticket, so you will have a <br />
-          better experience!
-        </h6>
+            // Decode the JWT token to get user information
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
 
-        <div className="form">
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="title">Subject</label>
-            <input
-              type="text"
-              placeholder="Subject goes here..."
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
+            const { id: ownerId } = JSON.parse(jsonPayload);
 
-            <label htmlFor="type">Type</label>
-            <select value={type} onChange={(e) => setType(e.target.value as "IT System" | "Management")}>
-              <option value="IT System">IT System</option>
-              <option value="Management">Management</option>
-            </select>
+            // Submit the ticket
+            const ticketData: CreateTicketPayload = {
+                title: formData.title,
+                type: formData.type,
+                description: formData.description,
+                assignee: "Unassigned", // Default assignee
+                date_created: new Date().toISOString(),
+                priority: "Medium", // Default priority
+                status: "Unseen" // Default status
+            };
 
-            <label htmlFor="desc">Description</label>
-            <textarea
-              placeholder="Description goes here..."
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            ></textarea>
+            await ticketService.createTicket(ownerId, ticketData);
 
-            <div className="buttons">
-              <button
-                type="button"
-                className="cancel_btn"
-                onClick={() => {
-                  setTitle("");
-                  setType("IT System");
-                  setDescription("");
-                  navigate("/tickets");
-                }}
-              >
-                Cancel
-              </button>
-              <button type="submit" className="send_btn">
-                Send
-              </button>
+            // Redirect to tickets page on success
+            navigate("/tickets");
+        } catch (err) {
+            setError("Failed to submit ticket. Please try again.");
+            console.error("Error submitting ticket:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <>
+            <div className="top_container">
+                <div className="name">
+                    <img className="logo" src="../src/assets/logo.png" alt="Logo" />
+                    <h2>Dentalign</h2>
+                </div>
+
+                <p className="text">We would always love to upgrade our system, to <br /> provide the best experience for our loyal beloved <br />customers.</p>
             </div>
-          </form>
-        </div>
-      </div>
-    </>
-  );
+
+            <div className="bottom_container">
+                <h1 className="what">What can we do for you?</h1>
+                <h6 className="send">Submit a ticket, so you will have a <br /> better experience!</h6>
+
+                <div className="form">
+                    <form onSubmit={handleSubmit}>
+                        <label htmlFor="title">Title</label>
+                        <input 
+                            type="text" 
+                            name="title"
+                            value={formData.title}
+                            onChange={handleChange}
+                            placeholder="Title goes here..."
+                            required
+                        />
+
+                        <label htmlFor="type">Type</label>
+                        <select 
+                            name="type"
+                            value={formData.type}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="IT System">IT System</option>
+                            <option value="Management">Management</option>
+                        </select>
+
+                        <label htmlFor="description">Description</label>
+                        <textarea 
+                            name="description"
+                            value={formData.description}
+                            onChange={handleChange}
+                            placeholder="Description goes here..."
+                            required
+                        ></textarea>
+
+                        {error && <div className="error-message">{error}</div>}
+
+                        <div className="buttons">
+                            <button 
+                                type="button" 
+                                className="cancel_btn"
+                                onClick={() => navigate("/tickets")}
+                            >
+                                Cancel
+                            </button>
+                            <button 
+                                type="submit" 
+                                className="send_btn"
+                                disabled={loading}
+                            >
+                                {loading ? "Sending..." : "Send"}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </>
+    );
 };
 
 export default TicketAppScreen;

@@ -24,7 +24,7 @@ const HeaderBar = () => {
             <div className ="cursor-pointer" onClick = {() => nav("/")}>
                 <img src={logo} alt="" />
             </div>
-            <div className={styles.nav}>
+            {/* <div className={styles.nav}>
                 <nav className={styles.links}>
                     <a className={styles.navLink} onClick = {() => nav("/")}>Home</a>
                     <a className={styles.navLink} onClick = {() => nav("/about_us")}>About Us</a>
@@ -42,7 +42,7 @@ const HeaderBar = () => {
                     <a className={styles.dd_list} onClick = {() => nav("/articles")}>Articles</a>
                     <a className={styles.dd_list} onClick = {() => nav("/contact")}>Contact Us</a>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
