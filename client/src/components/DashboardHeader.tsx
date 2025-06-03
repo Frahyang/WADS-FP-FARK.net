@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import logo from '../assets/text-logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { authService } from '../api/api'
 
 const DashboardHeader: React.FC = () => {
@@ -30,7 +30,7 @@ const DashboardHeader: React.FC = () => {
                     className={styles.logout_btn}
                 >
                     <FontAwesomeIcon icon={faSignOutAlt} />
-                    <span>Logout</span>
+                    <span className="hidden sm:inline">Logout</span>
                 </button>
             </div>
         </header>

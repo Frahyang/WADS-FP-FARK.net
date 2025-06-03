@@ -15,9 +15,6 @@ import OTPVerification from './pages/OTPVerification'
 import TicketAppScreen from './pages/TicketAppScreen';
 
 function App() {
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
-  console.log(localStorage.getItem("user"));
-  const ownerId = user?.id || null;
   return (
     <Routes>
       <Route path='/' element={<Home />} />
@@ -26,7 +23,7 @@ function App() {
       <Route path='/articles' element={<Articles />} />
       <Route path='/contact' element={<Contact />} />
       <Route path='/tickets' element={<CustStaffDashboard />} />
-      <Route path='/createticket' element={<TicketAppScreen ownerId={ownerId} />} />
+      <Route path='/createticket' element={<TicketAppScreen/>} />
       <Route path='/admin/:status?' element={<AdminDashboard />} />
       <Route path='/admin/summary' element={<AdminDashboardSummary />} />
       <Route path='/signin' element={<SignIn/>}/>

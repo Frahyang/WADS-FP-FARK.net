@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 const HeaderBar = () => {
     const nav = useNavigate()
-    const [navOpen, setOpen] = useState(false)
+    /* const [navOpen, setOpen] = useState(false) */
 
     const logo = "src/assets/text-logo-white.png"
     const styles = {
