@@ -45,12 +45,9 @@
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.15.27",
     "@types/nodemailer": "^6.4.17",
-<<<<<<< HEAD
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
     "@types/yamljs": "^0.2.34",
-=======
->>>>>>> 06dd04c2edd2f39c8334a7d5dcd4898f4840bad8
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }
