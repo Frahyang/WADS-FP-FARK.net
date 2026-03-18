@@ -1,4 +1,3 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom'
 
 import Home from './pages/Home'
@@ -23,12 +22,12 @@ function App() {
       <Route path='/articles' element={<Articles />} />
       <Route path='/contact' element={<Contact />} />
       <Route path='/tickets' element={<CustStaffDashboard />} />
-      <Route path='/createticket' element={<TicketAppScreen/>} />
+      <Route path='/createticket' element={<TicketAppScreen />} />
       <Route path='/admin/:status?' element={<AdminDashboard />} />
       <Route path='/admin/summary' element={<AdminDashboardSummary />} />
-      <Route path='/signin' element={<SignIn/>}/>
-      <Route path='/signup' element={<SignUp/>}/>
-      <Route path='/verify-email' element={<OTPVerification/>}/>
+      <Route path='/signin' element={<SignIn />} />
+      <Route path='/signup' element={<SignUp />} />
+      <Route path='/verify-email' element={<OTPVerification />} />
     </Routes>
   )
 }

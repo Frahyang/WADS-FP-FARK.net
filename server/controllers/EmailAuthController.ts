@@ -1,28 +1,29 @@
 // const nodemailer = require('nodemailer');
 // const dotenv = require('dotenv');
 
-import nodemailer, { SentMessageInfo } from 'nodemailer'
+import nodemailer from 'nodemailer'
+import type { SentMessageInfo } from 'nodemailer'
 import dotenv from 'dotenv'
-import { Response } from 'express'
+import type { Response } from 'express'
 
 dotenv.config();
 
 const userSendMail = (to: string, otp: string, titleTxt: string, _res: Response) => {
-    let config = {
-        service: 'gmail',
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASSWORD
-        }
+  let config = {
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASSWORD
     }
+  }
 
-    let transporter = nodemailer.createTransport(config);
+  let transporter = nodemailer.createTransport(config);
 
-    let mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: to,
-        subject: `Dentalign - OTP Verification`,
-        html: `
+  let mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: to,
+    subject: `Dentalign - OTP Verification`,
+    html: `
             <html>
                 <body style="font-family: Arial, sans-serif; background-color: #e8f0fe; padding: 20px;">
                     <div style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
@@ -44,34 +45,30 @@ const userSendMail = (to: string, otp: string, titleTxt: string, _res: Response)
                 </body>
             </html>
         `
-    };
+  };
 
-<<<<<<< HEAD
-    transporter.sendMail(mailOptions, (err:any, info:any) => {
-=======
-    transporter.sendMail(mailOptions, (err: Error | null, info: SentMessageInfo) => {
->>>>>>> 06dd04c2edd2f39c8334a7d5dcd4898f4840bad8
-        if (err) return err;
-        return info;
-    });
+  transporter.sendMail(mailOptions, (err: Error | null, info: SentMessageInfo) => {
+    if (err) return err;
+    return info;
+  });
 }
 
 const sendTicketResponseEmail = (to: string, ticketId: string, ticketTitle: string, ticketDescription: string, adminResponse: string) => {
-    let config = {
-        service: 'gmail',
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASSWORD
-        }
+  let config = {
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASSWORD
     }
+  }
 
-    let transporter = nodemailer.createTransport(config);
+  let transporter = nodemailer.createTransport(config);
 
-    let mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: to,
-        subject: `Dentalign - Response to Ticket #${ticketId}`,
-        html: `
+  let mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: to,
+    subject: `Dentalign - Response to Ticket #${ticketId}`,
+    html: `
             <html>
                 <body style="font-family: Arial, sans-serif; background-color: #e8f0fe; padding: 20px;">
                     <div style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
@@ -94,19 +91,14 @@ const sendTicketResponseEmail = (to: string, ticketId: string, ticketTitle: stri
                 </body>
             </html>
         `
-    };
+  };
 
-<<<<<<< HEAD
-    return new Promise((resolve, reject) => {
-        transporter.sendMail(mailOptions, (err:any, info:any) => {
-=======
-    return new Promise<SentMessageInfo>((resolve, reject) => {
-        transporter.sendMail(mailOptions, (err: Error | null, info: SentMessageInfo) => {
->>>>>>> 06dd04c2edd2f39c8334a7d5dcd4898f4840bad8
-            if (err) reject(err);
-            resolve(info);
-        });
+  return new Promise<SentMessageInfo>((resolve, reject) => {
+    transporter.sendMail(mailOptions, (err: Error | null, info: SentMessageInfo) => {
+      if (err) reject(err);
+      resolve(info);
     });
+  });
 }
 
 export { userSendMail, sendTicketResponseEmail };
