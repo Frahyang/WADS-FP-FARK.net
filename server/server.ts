@@ -51,11 +51,27 @@ app.get('/', (_req: any, res: any) => {
 });
 
 // Start server 
-app.listen(PORT, async () => {
+// app.listen(PORT, async () => {
+//   try {
+//     await connectToMongo();
+//     console.log(`Server running at http://localhost:${PORT}`);
+//   } catch (err) {
+//     console.error('MongoDB connection failed', err);
+//   }
+// });
+
+const startServer = async () => {
   try {
     await connectToMongo();
-    console.log(`Server running at http://localhost:${PORT}`);
+
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+
   } catch (err) {
-    console.error('MongoDB connection failed', err);
+    console.error("MongoDB connection failed", err);
+    process.exit(1);
   }
-});
+};
+
+startServer();
