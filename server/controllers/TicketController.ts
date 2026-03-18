@@ -1,8 +1,8 @@
-import { Ticket } from "../models/TicketModel.ts";
-import { User } from "../models/UserModel.ts";
+import { Ticket } from "../models/TicketModel.js";
+import { User } from "../models/UserModel.js";
 // import { Request, Response } from "express";
 import { v4 as uuidv4 } from 'uuid'
-import { sendTicketResponseEmail } from './EmailAuthController.ts';
+import { sendTicketResponseEmail } from './EmailAuthController.js';
 
 const createTicket = async (req: any, res: any) => {
   try {

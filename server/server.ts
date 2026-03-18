@@ -5,10 +5,10 @@ import swaggerUi from 'swagger-ui-express'
 import yaml from 'yamljs'
 
 // import { swaggerSpec } from './utils/swagger'
-import { connectToMongo } from './config/mongoClient.ts'
+import { connectToMongo } from './config/mongoClient.js'
 
-import usersRoute from './routes/UserRoutes.ts'
-import ticketRoute from './routes/TicketRoutes.ts'
+import usersRoute from './routes/UserRoutes.js'
+import ticketRoute from './routes/TicketRoutes.js'
 
 // <<<<<<< HEAD:server/server.js
 // const express = require('express');
@@ -28,7 +28,7 @@ import ticketRoute from './routes/TicketRoutes.ts'
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = Number(process.env.PORT) || 8080;
 
 // Middleware
 app.use(cors({

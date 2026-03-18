@@ -2,12 +2,11 @@
   "name": "wads-fp-fark.net",
   "version": "1.0.0",
   "description": "",
-  "main": "server.ts",
+  "main": "dist/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "db": "cloudflared access tcp --hostname mongodb.csbihub.id --url localhost:27018",
-    "server": "nodemon -x \"ts-node --project ../tsconfig.node.json\" server.ts",
-    "start": "concurrently \"npm run db\" \"npm run server\" "
+    "build": "tsc",
+    "start": "npm run build && node dist/server.js"
   },
   "repository": {
     "type": "git",
@@ -44,12 +43,12 @@
     "@types/cors": "^2.8.18",
     "@types/express": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.9",
-    "@types/node": "^22.15.27",
+    "@types/node": "^22.19.15",
     "@types/nodemailer": "^6.4.17",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
     "@types/yamljs": "^0.2.34",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.3"
   }
 }

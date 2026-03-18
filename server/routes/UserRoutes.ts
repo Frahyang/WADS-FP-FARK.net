@@ -2,7 +2,7 @@
 // const userController = require('../controllers/UserController');
 
 import express from 'express'
-import { signUp, signIn, verifyOtp, resendOtp, addUser, updateUser, deleteUser } from '../controllers/UserController.ts';
+import { signUp, signIn, verifyOtp, resendOtp, addUser, updateUser, deleteUser } from '../controllers/UserController.js';
 
 const router = express.Router();
 
