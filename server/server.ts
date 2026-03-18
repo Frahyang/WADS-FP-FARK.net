@@ -28,11 +28,14 @@ import ticketRoute from './routes/TicketRoutes.ts'
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: [
+    'http://localhost:5173',
+    'https://project-fark-mern.vercel.app'
+  ],
   credentials: true
 }));
 app.use(express.json());
