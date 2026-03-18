@@ -1,7 +1,7 @@
 import HeaderBar from '../components/HeaderBar'
 import FooterContent from '../components/FooterContent'
 import SlidingTestimonies from '../components/SlidingTestimonies'
-import Chatbot from '../components/Chatbot'
+// import Chatbot from '../components/Chatbot'
 
 import { useNavigate } from 'react-router-dom'
 import CertificationObject from '../components/CertificationObject'
@@ -85,7 +85,7 @@ function Home() {
       </main>
       <footer>
         <FooterContent />
-        <Chatbot />
+        {/* <Chatbot /> */}
       </footer>
     </>
   )
