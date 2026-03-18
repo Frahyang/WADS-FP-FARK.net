@@ -5,8 +5,8 @@
 
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { User } from '../models/UserModel.js'
-import { userSendMail } from './EmailAuthController.js';
+import { User } from '../models/UserModel.ts'
+import { userSendMail } from './EmailAuthController.ts';
 
 // Schedule cleanup task to run every hour
 setInterval(async () => {

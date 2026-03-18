@@ -1,6 +1,6 @@
 import express from 'express'
 import type { RequestHandler } from 'express'
-import { createTicket, deleteTicket, getTickets, getTicketsByOwnerID, updateStatus, sendTicketResponse } from '../controllers/TicketController.js';
+import { createTicket, deleteTicket, getTickets, getTicketsByOwnerID, updateStatus, sendTicketResponse } from '../controllers/TicketController.ts';
 
 const router = express.Router();
 

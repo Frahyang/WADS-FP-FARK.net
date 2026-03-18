@@ -5,10 +5,10 @@ import swaggerUi from 'swagger-ui-express'
 import yaml from 'yamljs'
 
 // import { swaggerSpec } from './utils/swagger'
-import { connectToMongo } from './config/mongoClient.js'
+import { connectToMongo } from './config/mongoClient.ts'
 
-import usersRoute from './routes/UserRoutes.js'
-import ticketRoute from './routes/TicketRoutes.js'
+import usersRoute from './routes/UserRoutes.ts'
+import ticketRoute from './routes/TicketRoutes.ts'
 
 // <<<<<<< HEAD:server/server.js
 // const express = require('express');
