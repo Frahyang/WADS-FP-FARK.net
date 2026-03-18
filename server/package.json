@@ -2,11 +2,9 @@
   "name": "wads-fp-fark.net",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/server.js",
+  "main": "server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    // "build": "tsc",
-    // "start": "node dist/server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
