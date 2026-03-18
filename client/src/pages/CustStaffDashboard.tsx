@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
-import { Search, Filter, Calendar, ArrowLeft, Plus} from 'lucide-react';
+import { Search, Filter, Calendar, ArrowLeft, Plus } from 'lucide-react';
 import DashboardHeader from '../components/DashboardHeader';
 import { ticketService } from '../api/api';
 import { useNavigate } from "react-router-dom";
@@ -10,23 +10,23 @@ interface Ticket {
   type: string;
   status: string;
   priority: string;
-  createdAt: string; // Assuming the date is received as a formatted string
+  createdAt: string;
   description: string;
 }
 
 interface BackendTicket {
-  _id: string; // Backend internal ID
-  ticket_id: string; // The public ticket ID
-  owner_id: string; // Assuming it's a string ObjectId
+  _id: string;
+  ticket_id: string;
+  owner_id: string;
   title: string;
   description: string;
   assignee: string;
   type: string;
-  date_created: string; // Assuming ISO string from backend
+  date_created: string;
   priority: string;
   status: string;
-  createdAt: string; // Mongoose timestamps
-  updatedAt: string; // Mongoose timestamps
+  createdAt: string;
+  updatedAt: string;
 }
 
 const CustomerDashboard = () => {
@@ -59,7 +59,7 @@ const CustomerDashboard = () => {
       }).join(''));
 
       const { id: ownerId } = JSON.parse(jsonPayload);
-      
+
       const data = await ticketService.getTicketsByOwnerId(ownerId);
       // Map backend data to frontend Ticket interface if necessary
       const formattedData: Ticket[] = data.map((ticket: BackendTicket) => ({
@@ -87,32 +87,32 @@ const CustomerDashboard = () => {
 
   const filteredTickets = useMemo(() => {
     let filtered = tickets;
-    
+
     if (activeTab !== 'All Tickets') {
       filtered = tickets.filter(ticket => {
         if (activeTab === 'Unseen') {
-          return ticket.status === 'Unseen'; 
+          return ticket.status === 'Unseen';
         } else {
           return ticket.status === activeTab;
         }
       });
     }
-    
+
     if (selectedPriorityFilter) {
       filtered = filtered.filter(ticket => ticket.priority === selectedPriorityFilter);
     }
-    
+
     if (searchQuery) {
       filtered = filtered.filter(ticket =>
         ticket.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         ticket.id.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
-    
+
     return filtered;
   }, [tickets, activeTab, searchQuery, selectedPriorityFilter]);
 
-  const getStatusColor = (status) => {
+  const getStatusColor = (status: string) => {
     switch (status) {
       case 'Completed':
         return 'text-green-600 bg-green-50 border-green-200';
@@ -123,7 +123,7 @@ const CustomerDashboard = () => {
     }
   };
 
-  const getPriorityColor = (priority) => {
+  const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'High':
         return 'text-red-600 bg-red-50 border-red-200';
@@ -136,7 +136,7 @@ const CustomerDashboard = () => {
     }
   };
 
-  const handleMobileTicketSelect = (ticket) => {
+  const handleMobileTicketSelect = (ticket: Ticket) => {
     setSelectedTicket(ticket);
     setShowMobileTicketDetails(true);
   };
@@ -154,7 +154,7 @@ const CustomerDashboard = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <DashboardHeader />
-   
+
       {/* Mobile Ticket Details Full Screen */}
       {showMobileTicketDetails && selectedTicket && (
         <div className="lg:hidden">
@@ -168,7 +168,7 @@ const CustomerDashboard = () => {
               <span className="text-sm font-medium">Back to tickets</span>
             </button>
           </div>
-          
+
           <div className="p-4 space-y-6">
             {/* Ticket ID Card */}
             <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
@@ -238,11 +238,10 @@ const CustomerDashboard = () => {
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap ${
-                    activeTab === tab
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  }`}
+                  className={`py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap ${activeTab === tab
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    }`}
                 >
                   {tab}
                 </button>
@@ -330,9 +329,8 @@ const CustomerDashboard = () => {
                 {/* Desktop Row */}
                 <div
                   onClick={() => setSelectedTicket(ticket)}
-                  className={`hidden lg:grid grid-cols-12 gap-4 px-6 py-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors ${
-                    selectedTicket?.id === ticket.id ? 'bg-blue-50 border-blue-200' : ''
-                  }`}
+                  className={`hidden lg:grid grid-cols-12 gap-4 px-6 py-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors ${selectedTicket?.id === ticket.id ? 'bg-blue-50 border-blue-200' : ''
+                    }`}
                 >
                   <div className="col-span-2 text-sm font-medium text-gray-900">
                     {ticket.id}
@@ -409,20 +407,20 @@ const CustomerDashboard = () => {
               {/* Ticket Details */}
               <div className="bg-gray-50 rounded-lg p-4">
                 <h3 className="text-lg font-medium text-gray-900 mb-4">Ticket Details</h3>
-                
+
                 <div className="space-y-3">
                   <div>
                     <span className="inline-block w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
                     <span className="text-sm font-medium text-gray-600">Ticket ID</span>
                     <div className="ml-4 text-sm font-medium text-gray-900">{selectedTicket.id}</div>
                   </div>
-                  
+
                   <div>
                     <span className="inline-block w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
                     <span className="text-sm font-medium text-gray-600">Title</span>
                     <div className="ml-4 text-sm font-medium text-gray-900">{selectedTicket.title}</div>
                   </div>
-                  
+
                   <div>
                     <span className="inline-block w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
                     <span className="text-sm font-medium text-gray-600">Type</span>

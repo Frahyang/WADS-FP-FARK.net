@@ -1,6 +1,6 @@
 import React from "react";
 import AdminTicket from "./AdminTicket";
-import { ITicket } from "../../../server/models/TicketModel";
+import { ITicket } from "../../types/types";
 
 interface Props {
   data: ITicket[];
@@ -9,11 +9,11 @@ interface Props {
 
 const AdminTable: React.FC<Props> = ({ data, onRefresh }) => {
 
-  const tickets = data 
+  const tickets = data
 
   const styles = {
     container: "overflow-x-auto mt-4 px-4",
-    table : "min-w-full text-left border-collapse",
+    table: "min-w-full text-left border-collapse",
     header: "bg-gray-100 text-gray-600 text-sm font-semibold border-b",
     headerData: "py-3 px-4"
   }

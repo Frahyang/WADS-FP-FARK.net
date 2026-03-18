@@ -1,8 +1,8 @@
 import React from 'react'
 
-interface Props { img:string, title:string, subtitle:string, desc:string}
+interface Props { img: string, title: string, subtitle: string, desc: string }
 
-const CertificationObject:React.FC<Props> = ({img, title, subtitle, desc}) => {
+const CertificationObject: React.FC<Props> = ({ img, title, subtitle, desc }) => {
   const styles = {
     container: "flex flex-col xl:flex-row items-center gap-10 my-10",
     name: "text-3xl pb-2 mb-2 border-b-2",

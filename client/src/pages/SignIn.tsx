@@ -48,7 +48,7 @@ const SignIn: React.FC = () => {
         sessionStorage.setItem("token", response.token);
         sessionStorage.setItem("user", JSON.stringify(response.user));
       }
-      
+
       console.log("User ID:", response.user.id);
       // Redirect based on user role
       if (response.user.role === "admin") {
@@ -58,7 +58,7 @@ const SignIn: React.FC = () => {
       }
     } catch (err) {
       const error = err as AxiosError<ApiErrorResponse>;
-         // Check if the error is an Axios error with a response
+      // Check if the error is an Axios error with a response
       if (error.response) {
         // Check if the status is 403 and needsVerification is true
         if (error.response.status === 403 && error.response.data?.needsVerification) {

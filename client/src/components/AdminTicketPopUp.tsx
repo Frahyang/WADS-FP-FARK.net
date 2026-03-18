@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, Calendar, AlertCircle, User, FileText, Settings, Mail } from 'lucide-react';
-import { PriorityType, StatusType } from "../../../server/models/TicketModel";
+import type { PriorityType, StatusType } from '../../types/types';
 import { ticketService } from '../api/api';
 
 interface Props {
@@ -234,7 +234,7 @@ const AdminTicketPopUp: React.FC<Props> = ({ isOpen, onClose, ticket, onUpdate, 
                     <User size={12} />
                     Assignee
                   </span>
-                   {isEditing ? (
+                  {isEditing ? (
                     <input
                       type="text"
                       value={editedAssignee}
@@ -246,7 +246,7 @@ const AdminTicketPopUp: React.FC<Props> = ({ isOpen, onClose, ticket, onUpdate, 
                   )}
                 </div>
               </div>
-              
+
               <div>
                 <span className="text-xs text-gray-500 uppercase tracking-wide block mb-2">Description</span>
                 <div className="bg-white rounded-lg p-4 border border-gray-200">
@@ -262,7 +262,7 @@ const AdminTicketPopUp: React.FC<Props> = ({ isOpen, onClose, ticket, onUpdate, 
               <Mail size={20} />
               Send Email Response
             </h3>
-            
+
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -288,11 +288,10 @@ const AdminTicketPopUp: React.FC<Props> = ({ isOpen, onClose, ticket, onUpdate, 
               <button
                 onClick={handleSendEmail}
                 disabled={isSending}
-                className={`w-full py-2 px-4 rounded-lg text-white font-medium ${
-                  isSending
+                className={`w-full py-2 px-4 rounded-lg text-white font-medium ${isSending
                     ? 'bg-gray-400 cursor-not-allowed'
                     : 'bg-violet-600 hover:bg-violet-700'
-                }`}
+                  }`}
               >
                 {isSending ? 'Sending...' : 'Send Response'}
               </button>

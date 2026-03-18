@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authService, ApiErrorResponse } from "../api/api";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();

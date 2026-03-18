@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { PriorityType, StatusType, ITicket } from "../../../server/models/TicketModel";
+import { ITicket } from "../../types/types";
+import type { PriorityType, StatusType } from "../../types/types";
 import PriorityDisplay from "./PriorityDisplay";
 import StatusDisplay from "./StatusDisplay";
 import AdminTicketPopup from "./AdminTicketPopUp";
@@ -49,8 +50,8 @@ const AdminTicket: React.FC<Props> = ({
 
   return (
     <>
-      <tr 
-        className="hover:bg-gray-50 transition-colors cursor-pointer" 
+      <tr
+        className="hover:bg-gray-50 transition-colors cursor-pointer"
         onClick={handleRowClick}
         role="button"
         tabIndex={0}

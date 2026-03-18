@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { AlertCircle, CheckCircle, Clock, Users, TrendingUp, Calendar } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom';
 import DashboardHeader from '../components/DashboardHeader';
 import DashboardNav from '../components/DashboardNav';
 import { ticketService } from '../api/api';
-import type { ITicket, StatusType } from '../../../server/models/TicketModel';
+import { ITicket } from '../../types/types';
+import type { StatusType } from '../../types/types';
 
 interface CustomTooltipProps {
   active?: boolean;
@@ -22,6 +24,14 @@ interface SummaryNavOption {
   option: string;
   func: () => void | Promise<void>;
   status?: StatusType | 'all' | null | 'summary';
+}
+
+interface StatCardProps {
+  icon: LucideIcon;
+  title: string;
+  value: number;
+  subtitle: string;
+  color: string;
 }
 
 const AdminDashboardSummary = () => {
@@ -117,8 +127,8 @@ const AdminDashboardSummary = () => {
     },
   ];
 
-  const StatCard = ({ icon: Icon, title, value, subtitle, color = 'blue' }) => {
-    const colorClasses = {
+  const StatCard = ({ icon: Icon, title, value, subtitle, color = 'blue' }: StatCardProps) => {
+    const colorClasses: Record<string, string> = {
       blue: 'bg-blue-50 text-blue-600 border-blue-200',
       green: 'bg-green-50 text-green-600 border-green-200',
       yellow: 'bg-yellow-50 text-yellow-700 border-yellow-200',
@@ -171,7 +181,7 @@ const AdminDashboardSummary = () => {
       <DashboardHeader />
       <DashboardNav navs={navOptions} currentFilter={'summary'} />
       <div className="max-w-7xl mx-auto p-4 pt-0 sm:p-6 min-h-screen">
-        
+
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Dashboard Overview</h1>
@@ -282,7 +292,7 @@ const AdminDashboardSummary = () => {
                       <span className="text-sm text-gray-500">{category.count}</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div 
+                      <div
                         className="bg-blue-500 h-2 rounded-full transition-all duration-300"
                         style={{ width: `${percentage}%` }}
                       ></div>
