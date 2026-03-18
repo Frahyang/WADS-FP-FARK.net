@@ -5,8 +5,8 @@
 
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { User } from '../models/UserModel'
-import { userSendMail } from './EmailAuthController';
+import { User } from '../models/UserModel.ts'
+import { userSendMail } from './EmailAuthController.ts';
 
 // Schedule cleanup task to run every hour
 setInterval(async () => {
@@ -21,21 +21,21 @@ setInterval(async () => {
 }, 60 * 60 * 1000); // Run every hour
 
 // Helpers
-function isMatch(password:any, confirmPassword:any) {
+function isMatch(password: any, confirmPassword: any) {
   return password === confirmPassword;
 }
 
-function validateEmail(email:string) {
+function validateEmail(email: string) {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return re.test(email);
 }
 
-function validatePassword(password:any) {
+function validatePassword(password: any) {
   const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
   return re.test(password);
 }
 
-function createRefreshToken(payload:any) {
+function createRefreshToken(payload: any) {
   return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET as string, { expiresIn: '1d' });
 }
 
@@ -54,7 +54,7 @@ const cleanupExpiredAccounts = async () => {
 };
 
 // Register User
-const signUp = async (req:any, res:any) => {
+const signUp = async (req: any, res: any) => {
   try {
     const { userName, email, password, confirmPassword, phoneNumber } = req.body;
 
@@ -93,25 +93,25 @@ const signUp = async (req:any, res:any) => {
 
     await userSendMail(email, otp, 'Verify your email address', res);
 
-    res.json({ 
+    res.json({
       message: 'Registration successful. Check your email for OTP. You have 10 minutes to verify your account.',
       expiresIn: '10 minutes'
     });
-  } catch (error:any) {
+  } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
 };
 
 // Email Verification
-const verifyOtp = async (req:any, res:any) => {
+const verifyOtp = async (req: any, res: any) => {
   try {
     const { email, otp } = req.body;
-    
+
     // First cleanup any expired accounts
     await cleanupExpiredAccounts();
-    
+
     const user = await User.findOne({ email });
-    
+
     if (!user) {
       return res.status(400).json({ message: 'Account not found or has expired. Please register again.' });
     }
@@ -136,21 +136,21 @@ const verifyOtp = async (req:any, res:any) => {
     await user.save();
 
     res.json({ message: 'Email verified successfully!' });
-  } catch (error:any) {
+  } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
 };
 
 // Resend OTP
-const resendOtp = async (req:any, res:any) => {
+const resendOtp = async (req: any, res: any) => {
   try {
     const { email } = req.body;
-    
+
     // First cleanup any expired accounts
     await cleanupExpiredAccounts();
-    
+
     const user = await User.findOne({ email });
-    
+
     if (!user) {
       return res.status(400).json({ message: 'Account not found or has expired. Please register again.' });
     }
@@ -166,17 +166,17 @@ const resendOtp = async (req:any, res:any) => {
 
     await userSendMail(email, otp, 'Your new OTP code', res);
 
-    res.json({ 
+    res.json({
       message: 'New OTP sent successfully. You have 10 minutes to verify your account.',
       expiresIn: '10 minutes'
     });
-  } catch (error:any) {
+  } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
 };
 
 // Login
-const signIn = async (req:any, res:any) => {
+const signIn = async (req: any, res: any) => {
   try {
     const { email, password } = req.body;
     if (!email || !password)
@@ -210,24 +210,24 @@ const signIn = async (req:any, res:any) => {
         role: user.role,
       },
     });
-  } catch (error:any) {
+  } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
 };
 
 // Get user info
-const userInfor = async (req:any, res:any) => {
+const userInfor = async (req: any, res: any) => {
   try {
     const userId = req.user.id;
     const user = await User.findById(userId).select('-password');
     res.json(user);
-  } catch (error:any) {
+  } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
 };
 
 // Update user (by user)
-const updateUser = async (req:any, res:any) => {
+const updateUser = async (req: any, res: any) => {
   try {
     const userId = req.user.id;
     const updates = req.body;
@@ -240,13 +240,13 @@ const updateUser = async (req:any, res:any) => {
     if (!updatedUser) return res.status(404).json({ message: 'User not found.' });
 
     res.json({ message: 'User updated successfully.', user: updatedUser });
-  } catch (error:any) {
+  } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
 };
 
 // Admin: Add User
-const addUser = async (req:any, res:any) => {
+const addUser = async (req: any, res: any) => {
   try {
     const { userName, email, password, phoneNumber, role } = req.body;
 
@@ -270,13 +270,13 @@ const addUser = async (req:any, res:any) => {
       message: 'User added by admin',
       user: { id: newUser._id, email: newUser.email, role: newUser.role },
     });
-  } catch (error:any) {
+  } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
 };
 
 // Delete user
-const deleteUser = async (req:any, res:any) => {
+const deleteUser = async (req: any, res: any) => {
   try {
     const userId = req.user.id;
     const deletedUser = await User.findByIdAndDelete(userId);
@@ -284,7 +284,7 @@ const deleteUser = async (req:any, res:any) => {
     if (!deletedUser) return res.status(404).json({ message: 'User not found.' });
 
     res.json({ message: 'User deleted successfully.' });
-  } catch (error:any) {
+  } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
 };

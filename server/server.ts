@@ -5,10 +5,10 @@ import swaggerUi from 'swagger-ui-express'
 import yaml from 'yamljs'
 
 // import { swaggerSpec } from './utils/swagger'
-import { connectToMongo } from './config/mongoClient'
+import { connectToMongo } from './config/mongoClient.ts'
 
-import usersRoute from './routes/UserRoutes'
-import ticketRoute from './routes/TicketRoutes'
+import usersRoute from './routes/UserRoutes.ts'
+import ticketRoute from './routes/TicketRoutes.ts'
 
 // <<<<<<< HEAD:server/server.js
 // const express = require('express');
@@ -43,7 +43,7 @@ app.use('/service/tickets', ticketRoute);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(yaml.load('./utils/swagger.yaml')))
 
 // Make sure server is running
-app.get('/', (_req:any, res:any) => {
+app.get('/', (_req: any, res: any) => {
   res.send('Server is working!');
 });
 
